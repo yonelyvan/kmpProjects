@@ -7,6 +7,9 @@ plugins {
     alias(libs.plugins.composeCompiler)
     //id("co.touchlab.skie") version "0.10.6"
     id("co.touchlab.skie") version "0.10.6"
+    //kotlin("plugin.serialization") version "1.9.20"
+    id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
+
 }
 
 kotlin {
@@ -39,10 +42,15 @@ kotlin {
             implementation("androidx.compose.material:material-icons-core:1.7.8")
             implementation("androidx.compose.material:material-icons-extended:1.7.8")
 
+            implementation(libs.ktor.client.android)
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
         }
 
         iosMain.dependencies {
             //implementation("co.touchlab.skie:runtime:0.10.6")
+            implementation(libs.ktor.client.darwin)
         }
 
         commonMain.dependencies {
@@ -53,6 +61,11 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
 
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.koin.core)
         }
 
         commonTest.dependencies {
@@ -90,6 +103,8 @@ android {
 
 dependencies {
     debugImplementation(compose.uiTooling)
+    implementation(libs.koin.android)
+    implementation(libs.koin.androidx.compose)
 
 }
 
