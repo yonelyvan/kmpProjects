@@ -13,7 +13,7 @@ data class ArticleRaw(
     val desc: String? = null,
 
     @SerialName("publishedAt")
-    val publishedAt: String? = null,
+    val publishedAt: String,
 
     @SerialName("urlToImage")
     val imageUrl: String? = null

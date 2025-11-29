@@ -5,11 +5,10 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
-    //id("co.touchlab.skie") version "0.10.6"
     id("co.touchlab.skie") version "0.10.6"
     //kotlin("plugin.serialization") version "1.9.20"
     id("org.jetbrains.kotlin.plugin.serialization") version libs.versions.kotlin.get()
-
+    alias(libs.plugins.sqlDelight)
 }
 
 kotlin {
@@ -25,7 +24,8 @@ kotlin {
     ).forEach { iosTarget ->
         iosTarget.binaries.framework {
             baseName = "ComposeApp"
-            isStatic = true
+            //isStatic = true
+            linkerOpts("-lsqlite3")
         }
     }
 
@@ -46,11 +46,13 @@ kotlin {
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.negotiation)
             implementation(libs.ktor.serialization.kotlinx.json)
+            implementation(libs.sql.android.driver)
         }
 
         iosMain.dependencies {
             //implementation("co.touchlab.skie:runtime:0.10.6")
             implementation(libs.ktor.client.darwin)
+            implementation(libs.sql.native.driver)
         }
 
         commonMain.dependencies {
@@ -66,6 +68,7 @@ kotlin {
             implementation(libs.ktor.serialization.kotlinx.json)
             implementation(libs.kotlinx.datetime)
             implementation(libs.koin.core)
+            implementation(libs.sql.coroutines.extensions)
         }
 
         commonTest.dependencies {
@@ -98,6 +101,15 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+
+sqldelight {
+    databases {
+        create(name = "DailyPulseDatabase") {
+            packageName.set("example.dailypulse.db")
+        }
     }
 }
 
