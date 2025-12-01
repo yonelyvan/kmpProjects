@@ -17,6 +17,8 @@ material3 = "1.4.0"
 composeMaterial3 = "1.5.5"
 navigationRuntimeKtx = "2.9.6"
 navigationCompose = "2.9.6" #TODO search the rigth version
+accompanistSwiperefresh = "0.24.13-rc"
+
 
 #kotor version client
 #ktorClient = "2.3.5"
@@ -27,6 +29,7 @@ sqlDelight = "2.0.0"
 
 [libraries]
 
+accompanist-swiperefresh = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanistSwiperefresh" }
 #coil-compose = { module = "io.coil-kt.coil3:coil-compose" }
 coil-compose = { module = "io.coil-kt:coil-compose", version = "2.6.0" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }

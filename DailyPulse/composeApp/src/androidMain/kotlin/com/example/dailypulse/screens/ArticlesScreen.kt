@@ -6,11 +6,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Info
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +28,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.dailypulse.articles.Article
 import com.example.dailypulse.articles.ArticlesViewModel
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshState
 import org.koin.androidx.compose.getViewModel
 
 
@@ -42,12 +42,14 @@ fun ArticlesScreen(
 
     Column {
         AppBar(onAboutButtonClick)
+        /*
         if (articlesState.value.loading)
             Loader()
+        */
         if (articlesState.value.error != null)
             ErrorMessage(articlesState.value.error!!)
         if (articlesState.value.articles.isNotEmpty())
-            ArticlesListView(articlesState.value.articles)
+            ArticlesListView(articlesViewModel)
 
     }
 }
@@ -73,12 +75,23 @@ fun AppBar(
 }
 
 @Composable
-fun ArticlesListView(articles: List<Article>) {
+fun ArticlesListView(viewModel: ArticlesViewModel) {
+    SwipeRefresh(
+        state = SwipeRefreshState(viewModel.articlesState.value.loading),
+        onRefresh = { viewModel.getArticles(true) }) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            items(viewModel.articlesState.value.articles.size) { index ->
+                ArticleItemView(article = viewModel.articlesState.value.articles[index])
+            }
+        }
+    }
+
+    /*
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(articles.size) { index ->
             ArticleItemView(articles[index])
         }
-    }
+    }*/
 }
 
 @Composable
@@ -107,22 +120,6 @@ fun ArticleItemView(article: Article) {
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun Loader() {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            modifier = Modifier.width(64.dp),
-            color = MaterialTheme.colorScheme.surface,
-            trackColor = MaterialTheme.colorScheme.secondary,
-        )
-    }
-}
-
-
 @Composable
 fun ErrorMessage(message: String) {
     Box(
@@ -140,6 +137,23 @@ fun ErrorMessage(message: String) {
     }
 }
 
+
+/*
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun Loader() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        CircularProgressIndicator(
+            modifier = Modifier.width(64.dp),
+            color = MaterialTheme.colorScheme.surface,
+            trackColor = MaterialTheme.colorScheme.secondary,
+        )
+    }
+}
+*/
 
 
 

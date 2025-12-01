@@ -117,6 +117,6 @@ dependencies {
     debugImplementation(compose.uiTooling)
     implementation(libs.koin.android)
     implementation(libs.koin.androidx.compose)
-
+    implementation(libs.accompanist.swiperefresh)
 }
 

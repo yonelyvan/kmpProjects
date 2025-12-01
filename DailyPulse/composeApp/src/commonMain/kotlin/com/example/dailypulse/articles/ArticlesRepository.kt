@@ -10,7 +10,6 @@ class ArticlesRepository(
             dataSource.clearArticles()
             return fetchArticles()
         }
-
         val articlesDb = dataSource.getAllArticles()
         println("Got ${articlesDb.size} from the database!!")
 

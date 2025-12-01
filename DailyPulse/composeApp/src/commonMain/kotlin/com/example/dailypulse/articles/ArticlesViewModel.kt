@@ -1,6 +1,7 @@
 package com.example.dailypulse.articles
 
 import com.example.dailypulse.BaseViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -15,29 +16,20 @@ class ArticlesViewModel(
 
     val articlesState: StateFlow<ArticlesState> get() = _articlesState
 
-    ///private val useCase: ArticlesUseCase
-
     init {
-        /*
-        val httpClient = HttpClient {
-            install(ContentNegotiation) {
-                json(Json {
-                    prettyPrint = true
-                    isLenient = true
-                    ignoreUnknownKeys = true
-                })
-            }
-        }
-        val service = ArticlesService(httpClient)
-        useCase = ArticlesUseCase(service)
-        */
-
         getArticles()
     }
 
-    private fun getArticles() {
+    fun getArticles(forceFetch: Boolean = false) {
         scope.launch {
-            val articlesFetched = useCase.fetchArticles()
+            _articlesState.emit(
+                ArticlesState(
+                    loading = true,
+                    articles = _articlesState.value.articles
+                )
+            )
+            delay(3000)
+            val articlesFetched = useCase.fetchArticles(forceFetch)
             _articlesState.emit(ArticlesState(articles = articlesFetched))
         }
     }
