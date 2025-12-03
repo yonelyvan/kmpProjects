@@ -1,4 +1,4 @@
-package com.example.dailypulse.articles
+package com.example.dailypulse.articles.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -13,7 +13,7 @@ data class ArticleRaw(
     val desc: String? = null,
 
     @SerialName("publishedAt")
-    val publishedAt: String,
+    val publishedAt: String?,
 
     @SerialName("urlToImage")
     val imageUrl: String? = null

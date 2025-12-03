@@ -1,7 +1,6 @@
-package com.example.dailypulse.articles
+package com.example.dailypulse.articles.data
 
 import example.dailypulse.db.DailyPulseDatabase
-
 
 class ArticlesDataSource(private val database: DailyPulseDatabase) {
 
@@ -23,7 +22,7 @@ class ArticlesDataSource(private val database: DailyPulseDatabase) {
         database.dailyPulseDatabaseQueries.insertArticle(
             articleRaw.title ?: "title",
             articleRaw.desc,
-            articleRaw.publishedAt,
+            articleRaw.publishedAt ?: "2025-12-01T13:00:01Z",
             articleRaw.imageUrl
         )
     }

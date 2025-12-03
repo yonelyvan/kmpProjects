@@ -1,4 +1,5 @@
-package com.example.dailypulse.articles
+package com.example.dailypulse.articles.data
+
 
 class ArticlesRepository(
     private val dataSource: ArticlesDataSource,

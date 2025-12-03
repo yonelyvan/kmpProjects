@@ -1,4 +1,5 @@
-package com.example.dailypulse.articles
+package com.example.dailypulse.articles.data
+
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
@@ -18,6 +19,3 @@ class ArticlesService(
         return response.articles
     }
 }
-
-
-
