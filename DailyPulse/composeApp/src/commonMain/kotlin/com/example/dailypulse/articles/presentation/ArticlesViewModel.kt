@@ -22,6 +22,7 @@ class ArticlesViewModel(
     }
 
     fun getArticles(forceFetch: Boolean = false) {
+        println(">>>>>>>>>>debug: fetchArticles forceFetch:$forceFetch")
         scope.launch {
             _articlesState.emit(
                 ArticlesState(

@@ -3,5 +3,5 @@ package com.example.dailypulse.screens
 enum class Screens(val route: String) {
     ARTICLES("reminders"),
     ABOUT_DEVICE("about-device"),
-
+    SOURCES_LIST("sources-list")
 }

@@ -16,10 +16,9 @@ class SourcesUseCase(
     private fun mapSources(sourceRaw: List<SourceRaw>): List<Source> {
         return sourceRaw.map { raw ->
             Source(
+                raw.id ?: "Name",
                 raw.name ?: "Name",
                 raw.desc ?: "description",
-                raw.url ?: "url",
-                raw.category ?: "Catergory",
                 raw.language ?: "Language",
                 raw.country ?: "Country"
             )

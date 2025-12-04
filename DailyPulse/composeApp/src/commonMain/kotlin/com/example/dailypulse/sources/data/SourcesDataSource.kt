@@ -20,22 +20,20 @@ class SourcesDataSource(private val database: DailyPulseDatabase) {
 
     private fun insertSource(sourceRaw: SourceRaw) {
         database.dailyPulseDatabaseQueries.insertSource(
-            sourceRaw.name ?: "name",
+            sourceRaw.id ?: "id",
+            sourceRaw.id ?: "name",
             sourceRaw.desc ?: "Description ...",
-            sourceRaw.url ?: "url",
-            sourceRaw.category ?: "Category",
             sourceRaw.language ?: "Lan",
-            sourceRaw.country ?: "PE"
+            sourceRaw.country ?: "Lan",
         )
     }
 
     private fun mapToSourceRaw(
         name: String,
-        desc: String?,
+        desc: String,
         url: String,
-        category: String?,
-        language: String?,
-        country: String?
+        category: String,
+        language: String,
     ): SourceRaw =
-        SourceRaw(name, desc, url, category, language, country)
+        SourceRaw(name, desc, url, language, category)
 }

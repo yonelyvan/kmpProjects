@@ -13,14 +13,13 @@ class SourcesViewModel(
     private val _sourcesState: MutableStateFlow<SourcesState> =
         MutableStateFlow(SourcesState(isLoading = true, sources = emptyList(), error = null))
 
-
     val sourcesState: StateFlow<SourcesState> get() = _sourcesState
 
     init {
         getSources()
     }
 
-    private fun getSources(forceFetch: Boolean = false) {
+    fun getSources(forceFetch: Boolean = false) {
         println(">>>>>>>>>>debug: fetchSources forceFetch:$forceFetch")
         scope.launch {
             _sourcesState.emit(

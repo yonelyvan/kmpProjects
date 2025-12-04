@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Assignment
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -36,12 +37,13 @@ import org.koin.androidx.compose.getViewModel
 @Composable
 fun ArticlesScreen(
     onAboutButtonClick: () -> Unit,
+    onSourcesButtonClick: () -> Unit,
     articlesViewModel: ArticlesViewModel = getViewModel()
 ) {
     val articlesState = articlesViewModel.articlesState.collectAsState()
 
     Column {
-        AppBar(onAboutButtonClick)
+        AppBar(onAboutButtonClick, onSourcesButtonClick)
         /*
         if (articlesState.value.loading)
             Loader()
@@ -50,7 +52,6 @@ fun ArticlesScreen(
             ErrorMessage(articlesState.value.error!!)
         if (articlesState.value.articles.isNotEmpty())
             ArticlesListView(articlesViewModel)
-
     }
 }
 
@@ -58,30 +59,37 @@ fun ArticlesScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBar(
-    onAboutButtonClick: () -> Unit
+    onAboutButtonClick: () -> Unit,
+    onSourcesButtonClick: () -> Unit
 ) {
     TopAppBar(
         title = { Text(text = "Articles") },
         actions = {
+            IconButton(onClick = onSourcesButtonClick) {
+                Icon(
+                    imageVector = Icons.Outlined.Assignment,
+                    contentDescription = "List sources"
+                )
+            }
             IconButton(onClick = onAboutButtonClick) {
                 Icon(
                     imageVector = Icons.Outlined.Info,
                     contentDescription = "About Device Button"
                 )
             }
+
         }
     )
-
 }
 
 @Composable
 fun ArticlesListView(viewModel: ArticlesViewModel) {
     SwipeRefresh(
-        state = SwipeRefreshState(viewModel.articlesState.value.loading),
+        state = SwipeRefreshState(viewModel.articlesState.collectAsState().value.loading),
         onRefresh = { viewModel.getArticles(true) }) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(viewModel.articlesState.value.articles.size) { index ->
-                ArticleItemView(article = viewModel.articlesState.value.articles[index])
+                ArticleItemView(article = viewModel.articlesState.collectAsState().value.articles[index])
             }
         }
     }

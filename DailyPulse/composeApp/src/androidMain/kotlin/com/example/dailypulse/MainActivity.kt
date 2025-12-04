@@ -22,7 +22,6 @@ class MainActivity : ComponentActivity() {
             ) {
                 //ArticlesScreen(articlesViewModel = articlesViewModel)
                 AppScaffold()
-
             }
         }
     }
