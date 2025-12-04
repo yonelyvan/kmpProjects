@@ -2,8 +2,8 @@ package com.example.dailypulse.sources.presentation
 
 import com.example.dailypulse.sources.application.Source
 
-class SourcesState(
-    val sources: List<Source> = emptyList(),
+data class SourcesState(
+    val sources: List<Source> = listOf(),
     val isLoading: Boolean = false,
     val error: String? = null
 )

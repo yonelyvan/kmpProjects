@@ -29,7 +29,6 @@ extension ArticlesScreen {
                 }
             }
         }
-        
     }
 }
 

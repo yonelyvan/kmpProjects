@@ -29,6 +29,8 @@ struct AboutScreen: View {
 }
 
 
+/*
 #Preview {
     AboutScreen()
 }
+*/

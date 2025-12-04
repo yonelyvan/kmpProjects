@@ -12,14 +12,31 @@ struct ComposeView: UIViewControllerRepresentable {
 
 struct ContentView: View {
     @State private var shouldOpenAbout = false
+    @State private var shouldOpenSources = false
     
     
     var body: some View {
         let articlesScreen = ArticlesScreen(viewModel: .init())
+        let sourcesScreen = SourcesScreen(viewModel: .init())
+        
         NavigationStack{
             ArticlesScreen(viewModel:  .init())
                 .toolbar {
-                    ToolbarItem{
+                    // Botón (Sources)
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            shouldOpenSources = true
+                        } label: {
+                            Label("Sources", systemImage: "list.bullet")
+                        }
+                        .popover(isPresented: $shouldOpenSources){
+                            sourcesScreen
+                        }
+                    }
+                    
+                    // Botón (About)
+                    ToolbarItem(placement: .navigationBarTrailing){
+                        
                         Button{
                             shouldOpenAbout = true
                         }
@@ -31,6 +48,9 @@ struct ContentView: View {
                         }
                         
                     }
+                   
+                  
+                    
                 }
         }.refreshable {
             articlesScreen.viewModel.articlesViewModel.getArticles(forceFetch: true)
